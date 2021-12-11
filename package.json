@@ -1,60 +1,21 @@
 {
-  "name": "ezcontractz",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@auth0/auth0-react": "^1.8.0",
-    "@popperjs/core": "^2.10.2",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.24.0",
-    "bcrypt": "^5.0.1",
-    "bootstrap": "^5.1.3",
-    "cors": "^2.8.5",
-    "es6-promise": "^4.2.8",
-    "isomorphic-fetch": "^3.0.0",
-    "npm-run-all": "^4.1.5",
-    "pg": "^8.7.1",
-    "react": "^17.0.2",
-    "react-bootstrap": "^2.0.2",
-    "react-bootstrap-icons": "^1.6.1",
-    "react-dom": "^17.0.2",
-    "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
-    "react-table": "^7.7.0",
-    "sequelize": "^6.12.0-alpha.1",
-    "styled-components": "^5.3.3",
-    "web-vitals": "^1.0.1"
-  },
+  "name": "ezcontractz-backend",
+  "version": "1.0.0",
+  "description": "API for EZContractz",
+  "main": "index.js",
   "scripts": {
-    "client": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server": "node server/index.js",
-    "start": "run-p server client"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "repository": {
+    "type": "git",
+    "url": " (https://github.com/AlfredConlan/ezcontractz-backend.git)"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15",
-    "sequelize-cli": "^6.3.0"
+  "author": "Jake Jenkins, Carmen Kesho, Al Conlan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "pg": "^8.7.1",
+    "sequelize": "^6.12.0-beta.2"
   }
 }
