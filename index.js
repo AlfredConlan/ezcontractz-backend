@@ -129,6 +129,7 @@ app.post("/users", async (req, res) => {
     email: req.body.email,
     location: req.body.location,
     role: req.body.role,
+    userImage: req.body.userImage,
   });
   res.send('{"userRegistered": "true"}');
 });
