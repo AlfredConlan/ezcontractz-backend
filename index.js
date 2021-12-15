@@ -200,6 +200,7 @@ app.post("/tasks", async (req, res) => {
   // const userId = req.params["userName"];
   await Tasks.create(
     {
+        userName: req.body.userName,
       taskName: req.body.taskName,
       category: req.body.category,
       description: req.body.description,
@@ -207,9 +208,7 @@ app.post("/tasks", async (req, res) => {
       scheduled: req.body.scheduled,
       date: req.body.date,
       maxBudget: req.body.maxBudget,
-    }.catch((e) => {
-      console.log(e);
-    })
+    }
   );
   return res.send('{"status": "Tasks added!"}');
 });
@@ -221,16 +220,16 @@ app.get("/tasks", async (req, res) => {
   res.status(200).send(tasks);
 });
 
-// get all tasks for current user87bhgv
-app.get("/tasks/:user_name", async (req, res) => {
+// get all tasks for current 
+app.get("/tasks/:userName", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  const userId = req.params["user_name"];
-  const allTaskss = await Tasks.findAll({
+  const userName = req.params["userName"];
+  const userTasks = await Tasks.findAll({
     where: {
-      user_name: userId,
+      userName: userName,
     },
   });
-  res.status(200).send(allTaskss);
+  res.status(200).send(userTasks);
 });
 
 // get one task by date for current user
@@ -248,18 +247,16 @@ app.get("/tasks/:user_name/:date_of_task", async (req, res) => {
   res.status(200).send(taskData);
 });
 
-// delete Tasks
-app.delete("/deleteTask", (req, res) => {
+// delete a task   WORKING
+app.delete("/tasks/delete/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  const user_name = req.body.user_name;
-  const location_of_task = req.body.location_of_task;
-  Tasks.destroy({
+  let id = req.params["id"];
+  await Tasks.destroy({
     where: {
-      user_name: user_name,
-      location_of_task: location_of_task,
+      id: id,
     },
-  });
-  return res.send('{"status": "Task deleted!"}');
+  });c
+  res.send('{"taskDeleted": "true"}');
 });
 
 // Jake Section
