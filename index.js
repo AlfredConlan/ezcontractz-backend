@@ -181,6 +181,7 @@ app.put("/users/modify/:user_name", async (req, res) => {
   });
 });
 
+
 // delete a user   WORKING
 app.delete("/users/delete/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
@@ -199,7 +200,7 @@ app.post("/tasks", async (req, res) => {
   // const userId = req.params["userName"];
   await Tasks.create(
     {
-        userName: req.body.userName,
+      userName: req.body.userName,
       taskName: req.body.taskName,
       category: req.body.category,
       description: req.body.description,
@@ -246,7 +247,7 @@ app.get("/tasks/:user_name/:date_of_task", async (req, res) => {
   res.status(200).send(taskData);
 });
 
-// delete a task   WORKING
+// delete a task by id  WORKING
 app.delete("/tasks/delete/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let id = req.params["id"];
@@ -254,7 +255,7 @@ app.delete("/tasks/delete/:id", async (req, res) => {
     where: {
       id: id,
     },
-  });c
+  });
   res.send('{"taskDeleted": "true"}');
 });
 
