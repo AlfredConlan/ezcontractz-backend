@@ -144,7 +144,7 @@ app.get("/users", async (req, res) => {
 // get one user
 app.get("/users/:email", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  let email = req.params["email"];
+  let email = req.params.email;
   const users = await Users.findAll({
     where: {
       email: email,
