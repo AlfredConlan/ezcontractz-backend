@@ -12,6 +12,7 @@ const config = require("./config/config.json")[env];
 const db = {};
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const res = require("express/lib/response");
 
 app.use(cors({ origin: (orig, cb) => cb(null, true), credentials: true }));
 
@@ -198,18 +199,16 @@ app.delete("/users/delete/:id", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   // const userId = req.params["userName"];
-  await Tasks.create(
-    {
-        userName: req.body.userName,
-      taskName: req.body.taskName,
-      category: req.body.category,
-      description: req.body.description,
-      assignedContractor: req.body.assignedContractor,
-      scheduled: req.body.scheduled,
-      date: req.body.date,
-      maxBudget: req.body.maxBudget,
-    }
-  );
+  await Tasks.create({
+    userName: req.body.userName,
+    taskName: req.body.taskName,
+    category: req.body.category,
+    description: req.body.description,
+    assignedContractor: req.body.assignedContractor,
+    scheduled: req.body.scheduled,
+    date: req.body.date,
+    maxBudget: req.body.maxBudget,
+  });
   return res.send('{"status": "Tasks added!"}');
 });
 
@@ -220,7 +219,7 @@ app.get("/tasks", async (req, res) => {
   res.status(200).send(tasks);
 });
 
-// get all tasks for current 
+// get all tasks for current
 app.get("/tasks/:userName", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const userName = req.params["userName"];
@@ -255,7 +254,8 @@ app.delete("/tasks/delete/:id", async (req, res) => {
     where: {
       id: id,
     },
-  });c
+  });
+  c;
   res.send('{"taskDeleted": "true"}');
 });
 
@@ -312,3 +312,15 @@ app.post("/yelp", (req, res) => {
       res.json(response.data);
     });
 });
+
+// Upload image to freeimage.host
+app
+  .post("/image-upload", (req, res) => {
+    const { photo } = req.body;
+    axios.post("http://freeimage.host/api/1/upload/?key=6d207e02198a847aa98d0a2a901485a5&source=" + photo + "&format=json");
+  })
+  .then((response) => {
+    console.log(response);
+    res.json(response.data);
+    res.send(response.data);
+  });
