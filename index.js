@@ -209,6 +209,30 @@ app.post("/tasks", async (req, res) => {
     date: req.body.date,
     maxBudget: req.body.maxBudget,
   });
+  return res.send('{"status": "Task Updated!"}');
+});
+
+// Update Task
+app.put("/tasks/update/:taskName", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  const taskName = req.params["taskName"];
+  await Tasks.update(
+    {
+      userName: req.body.userName,
+      taskName: req.body.taskName,
+      category: req.body.category,
+      description: req.body.description,
+      assignedContractor: req.body.assignedContractor,
+      scheduled: req.body.scheduled,
+      date: req.body.date,
+      maxBudget: req.body.maxBudget,
+    },
+    {
+      where: {
+        taskName: taskName,
+      },
+    }
+  );
   return res.send('{"status": "Tasks added!"}');
 });
 
@@ -246,7 +270,7 @@ app.get("/tasks/:user_name/:date_of_task", async (req, res) => {
   res.status(200).send(taskData);
 });
 
-// delete a task   WORKING
+// delete a task by id  WORKING
 app.delete("/tasks/delete/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let id = req.params["id"];
@@ -255,7 +279,6 @@ app.delete("/tasks/delete/:id", async (req, res) => {
       id: id,
     },
   });
-  c;
   res.send('{"taskDeleted": "true"}');
 });
 
