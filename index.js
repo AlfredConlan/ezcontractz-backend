@@ -12,6 +12,8 @@ const config = require("./config/config.json")[env];
 const db = {};
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const res = require("express/lib/response");
+const FormData = require("form-data");
 
 app.use(cors({ origin: (orig, cb) => cb(null, true), credentials: true }));
 
@@ -96,23 +98,18 @@ Tasks.init(
 app.post("/loginAttempt", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const username = req.body.username;
-  console.log(username);
   const password = req.body.password;
-  console.log(password);
   Users.findOne({
     where: {
       userName: username,
     },
   }).then((users) => {
-    console.log(users);
     bcrypt.compare(password, users.password, function (err, isMatch) {
       if (err) {
         throw err;
       } else if (!isMatch) {
-        console.log("isMatch is False");
         return res.send('{"isMatch": "false"}');
       } else {
-        console.log("isMatch is True");
         res.send('{"isMatch": "true"}');
       }
     });
@@ -129,6 +126,7 @@ app.post("/users", async (req, res) => {
     email: req.body.email,
     location: req.body.location,
     role: req.body.role,
+    userImage: req.body.userImage,
   });
   res.send('{"userRegistered": "true"}');
 });
@@ -143,7 +141,7 @@ app.get("/users", async (req, res) => {
 // get one user
 app.get("/users/:email", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  let email = req.params["email"];
+  let email = req.params.email;
   const users = await Users.findAll({
     where: {
       email: email,
@@ -181,7 +179,6 @@ app.put("/users/modify/:user_name", async (req, res) => {
   });
 });
 
-
 // delete a user   WORKING
 app.delete("/users/delete/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
@@ -198,6 +195,7 @@ app.delete("/users/delete/:id", async (req, res) => {
 app.post("/tasks", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   // const userId = req.params["userName"];
+<<<<<<< HEAD
   await Tasks.create(
     {
       userName: req.body.userName,
@@ -215,6 +213,23 @@ app.post("/tasks", async (req, res) => {
 
 // Update Task 
 app.put("/tasks/update/:id", async (req, res) => {
+=======
+  await Tasks.create({
+    userName: req.body.userName,
+    taskName: req.body.taskName,
+    category: req.body.category,
+    description: req.body.description,
+    assignedContractor: req.body.assignedContractor,
+    scheduled: req.body.scheduled,
+    date: req.body.date,
+    maxBudget: req.body.maxBudget,
+  });
+  return res.send('{"status": "Task Updated!"}');
+});
+
+// Update Task
+app.put("/tasks/update/:taskName", async (req, res) => {
+>>>>>>> main
   res.setHeader("Content-Type", "application/json");
   const id = req.params["id"];
   await Tasks.update(
@@ -230,7 +245,11 @@ app.put("/tasks/update/:id", async (req, res) => {
     },
     {
       where: {
+<<<<<<< HEAD
         id: id
+=======
+        taskName: taskName,
+>>>>>>> main
       },
     }
   );
@@ -244,7 +263,7 @@ app.get("/tasks", async (req, res) => {
   res.status(200).send(tasks);
 });
 
-// get all tasks for current 
+// get all tasks for current
 app.get("/tasks/:userName", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const userName = req.params["userName"];
@@ -332,7 +351,25 @@ app.post("/yelp", (req, res) => {
       },
     })
     .then((response) => {
-      console.log(response);
       res.json(response.data);
     });
+});
+
+// Upload image to freeimage.host
+app.post("/image-upload", (req, res) => {
+  const { photo } = req.body;
+  const source = req.body.source.trim();
+  const data = new FormData();
+  data.append("source", source);
+  axios
+    .post("https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5&action=upload", {
+      method: "POST",
+      body: data,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+    .catch(function (error) {})
+    // .then((res) => res.json())
+    .then((res) => {});
 });
