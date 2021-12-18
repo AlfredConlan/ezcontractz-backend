@@ -98,23 +98,18 @@ Tasks.init(
 app.post("/loginAttempt", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const username = req.body.username;
-  console.log(username);
   const password = req.body.password;
-  console.log(password);
   Users.findOne({
     where: {
       userName: username,
     },
   }).then((users) => {
-    console.log(users);
     bcrypt.compare(password, users.password, function (err, isMatch) {
       if (err) {
         throw err;
       } else if (!isMatch) {
-        console.log("isMatch is False");
         return res.send('{"isMatch": "false"}');
       } else {
-        console.log("isMatch is True");
         res.send('{"isMatch": "true"}');
       }
     });
@@ -332,7 +327,6 @@ app.post("/yelp", (req, res) => {
       },
     })
     .then((response) => {
-      console.log(response);
       res.json(response.data);
     });
 });
@@ -341,7 +335,6 @@ app.post("/yelp", (req, res) => {
 app.post("/image-upload", (req, res) => {
   const { photo } = req.body;
   const source = req.body.source.trim();
-  console.log(source);
   const data = new FormData();
   data.append("source", source);
   axios
@@ -352,11 +345,7 @@ app.post("/image-upload", (req, res) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     })
-    .catch(function (error) {
-      console.log(error.message);
-    })
+    .catch(function (error) {})
     // .then((res) => res.json())
-    .then((res) => {
-      console.log("response from freeimage: ", res);
-    });
+    .then((res) => {});
 });
