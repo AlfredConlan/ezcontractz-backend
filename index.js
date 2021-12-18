@@ -13,6 +13,7 @@ const db = {};
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const res = require("express/lib/response");
+const FormData = require("form-data");
 
 app.use(cors({ origin: (orig, cb) => cb(null, true), credentials: true }));
 
@@ -339,9 +340,23 @@ app.post("/yelp", (req, res) => {
 // Upload image to freeimage.host
 app.post("/image-upload", (req, res) => {
   const { photo } = req.body;
-  axios.post("http://freeimage.host/api/1/upload/?key=6d207e02198a847aa98d0a2a901485a5&source=" + photo + "&format=json", {}).then((response) => {
-    console.log(response);
-    res.json(response.data);
-    res.send(response.data);
-  });
+  const source = req.body.source.trim();
+  console.log(source);
+  const data = new FormData();
+  data.append("source", source);
+  axios
+    .post("https://freeimage.host/api/1/upload?key=6d207e02198a847aa98d0a2a901485a5&action=upload", {
+      method: "POST",
+      body: data,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+    .catch(function (error) {
+      console.log(error.message);
+    })
+    // .then((res) => res.json())
+    .then((res) => {
+      console.log("response from freeimage: ", res);
+    });
 });
