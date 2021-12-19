@@ -1,4 +1,8 @@
 const { Model } = require("sequelize");
+import sequelize from "./db";
+import { STRING } from "sequelize";
+import { userPhoto } from "./attachments";
+
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     /**
@@ -25,5 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Users",
     }
   );
+  userPhoto.addTo(Users);
+
   return Users;
 };
