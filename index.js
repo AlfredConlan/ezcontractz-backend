@@ -210,10 +210,10 @@ app.post("/tasks", async (req, res) => {
   return res.send('{"status": "Task Updated!"}');
 });
 
-// Update Task
-app.put("/tasks/update/:taskName", async (req, res) => {
+// Update Task 
+app.put("/tasks/update/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  const taskName = req.params["taskName"];
+  const id = req.params["id"];
   await Tasks.update(
     {
       userName: req.body.userName,
@@ -227,11 +227,11 @@ app.put("/tasks/update/:taskName", async (req, res) => {
     },
     {
       where: {
-        taskName: taskName,
+        id: id
       },
     }
   );
-  return res.send('{"status": "Tasks added!"}');
+  return res.send('{"status": "Tasks updated!"}');
 });
 
 // get all tasks
