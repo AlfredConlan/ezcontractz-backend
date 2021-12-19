@@ -1,7 +1,6 @@
 const express = require("express");
 const PORT = process.env.PORT || 3001;
 const app = express();
-const bcrypt = require("bcrypt");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
@@ -94,27 +93,30 @@ Tasks.init(
   }
 );
 
-// login a user
-app.post("/loginAttempt", async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-  const username = req.body.username;
-  const password = req.body.password;
-  Users.findOne({
-    where: {
-      userName: username,
-    },
-  }).then((users) => {
-    bcrypt.compare(password, users.password, function (err, isMatch) {
-      if (err) {
-        throw err;
-      } else if (!isMatch) {
-        return res.send('{"isMatch": "false"}');
-      } else {
-        res.send('{"isMatch": "true"}');
-      }
-    });
-  });
-});
+// sequelize.sync({ force: true }).then(() => {
+//   // Or you can pass multer-style File object, for example
+//   let user2 = Users.build({
+//     // picture: "http://example.com/somepic2.jpg",
+//     backgroundImage: {
+//       path: "/assets/img",
+//       mimetype: "image/png",
+//     },
+//   });
+
+//   user2.save();
+
+//   // Deleting file(s)
+//   user2.update({ picture: null });
+// });
+
+//
+// This will be accessed from the frontend?
+//
+// Users.findById(1).then((user) => {
+//   console.log(user.picture.small);
+//   console.log(user.picture.big);
+//   console.log(user.picture.original);
+// });
 
 // add a user   WORKING
 app.post("/users", async (req, res) => {
@@ -347,5 +349,7 @@ app.post("/image-upload", (req, res) => {
     })
     .catch(function (error) {})
     // .then((res) => res.json())
-    .then((res) => {});
+    .then((res) => {
+      console.log("Photo response = ", res);
+    });
 });
