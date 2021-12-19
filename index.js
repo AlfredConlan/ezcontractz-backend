@@ -210,7 +210,7 @@ app.post("/tasks", async (req, res) => {
   return res.send('{"status": "Task Updated!"}');
 });
 
-// Update Task 
+// Update Task
 app.put("/tasks/update/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const id = req.params["id"];
@@ -227,7 +227,31 @@ app.put("/tasks/update/:id", async (req, res) => {
     },
     {
       where: {
-        id: id
+        id: id,
+      },
+    }
+  );
+  return res.send('{"status": "Tasks updated!"}');
+});
+
+// Update Task by taskname
+app.put("/tasks/update/:taskname", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  const taskName = req.params["taskName"];
+  await Tasks.update(
+    {
+      userName: req.body.userName,
+      taskName: req.body.taskName,
+      category: req.body.category,
+      description: req.body.description,
+      assignedContractor: req.body.assignedContractor,
+      scheduled: req.body.scheduled,
+      date: req.body.date,
+      maxBudget: req.body.maxBudget,
+    },
+    {
+      where: {
+        taskname: taskName,
       },
     }
   );
