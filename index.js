@@ -68,7 +68,6 @@ Users.init(
     email: DataTypes.STRING,
     location: DataTypes.STRING,
     role: DataTypes.STRING,
-    userImage: DataTypes.BLOB,
   },
   {
     sequelize,
@@ -156,29 +155,24 @@ app.get("/users/:email", async (req, res) => {
 app.put("/users/modify/:user_name", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let userName = req.params["user_name"];
-  bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(req.body.password, salt, (err, hash) => {
-      if (!err) {
-        Users.update(
-          {
-            userName: req.body.userName,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: hash,
-            location: req.body.location,
-            role: req.body.role,
-          },
-          {
-            where: {
-              userName: userName,
-            },
-          }
-        );
+  if (!err) {
+    Users.update(
+      {
+        userName: req.body.userName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        location: req.body.location,
+        role: req.body.role,
+      },
+      {
+        where: {
+          userName: userName,
+        },
       }
-      res.send('{"userRegistered": "true"}');
-    });
-  });
+    );
+  }
+  res.send('{"userRegistered": "true"}');
 });
 
 // delete a user   WORKING
