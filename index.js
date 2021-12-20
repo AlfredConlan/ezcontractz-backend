@@ -155,25 +155,21 @@ app.get("/users/:email", async (req, res) => {
 app.put("/users/modify/:user_name", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   let UserName = req.params["user_name"];
-  if (!err) {
-    Users.update(
-      {
-        userName: req.body.userName,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        location: req.body.location,
-        role: req.body.role,
+  await Users.update(
+    {
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      location: req.body.location,
+      role: req.body.role,
+    },
+    {
+      where: {
+        userName: UserName,
       },
-      {
-        where: {
-          userName: UserName,
-        },
-      }
-    );
-  } else {
-    res.send("error");
-  }
+    }
+  );
   res.send('{"userRegistered": "true"}');
 });
 
