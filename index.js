@@ -14,7 +14,7 @@ const axios = require("axios");
 const res = require("express/lib/response");
 const FormData = require("form-data");
 
-app.use(cors({ origin: (orig, cb) => cb(null, true), credentials: true }));
+// app.use(cors({ origin: (orig, cb) => cb(null, true), credentials: true }));
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
