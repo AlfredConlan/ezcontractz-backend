@@ -154,7 +154,7 @@ app.get("/users/:email", async (req, res) => {
 // update a user   WORKING
 app.put("/users/modify/:user_name", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  let userName = req.params["user_name"];
+  let UserName = req.params["user_name"];
   if (!err) {
     Users.update(
       {
@@ -167,10 +167,12 @@ app.put("/users/modify/:user_name", async (req, res) => {
       },
       {
         where: {
-          userName: userName,
+          userName: UserName,
         },
       }
     );
+  } else {
+    res.send("error");
   }
   res.send('{"userRegistered": "true"}');
 });
