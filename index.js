@@ -210,8 +210,8 @@ app.post("/tasks", async (req, res) => {
   return res.send('{"status": "Task Updated!"}');
 });
 
-// Update Task
-app.put("/tasks/update/:id", async (req, res) => {
+// Update Task by id
+app.put("/tasks/updatebyid/:id", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const id = req.params["id"];
   await Tasks.update(
