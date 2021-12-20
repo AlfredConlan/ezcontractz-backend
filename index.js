@@ -235,7 +235,7 @@ app.put("/tasks/updatebyid/:id", async (req, res) => {
 });
 
 // Update Task by taskname
-app.put("/tasks/update/:taskname", async (req, res) => {
+app.put("/tasks/update/:taskName", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   const taskName = req.params["taskName"];
   await Tasks.update(
@@ -251,7 +251,7 @@ app.put("/tasks/update/:taskname", async (req, res) => {
     },
     {
       where: {
-        taskname: taskName,
+        taskName: taskName,
       },
     }
   );
