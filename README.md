@@ -26,6 +26,6 @@
 - Jake Jenkins (Admin Page, Tasks Page, About Us Page, API Calls)
 - Carmen Kesho - (Contractor Search Page, Navigation Bar, API Calls)
 
-<a href="https://github.com/jakejenk/DC_Full_Stack/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jakejenk/DC_Full_Stack" />
+<a href="https://github.com/AlfredConlan/ezcontractz-backend/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AlfredConlan/ezcontractz-backend" />
 </a>
